@@ -1,6 +1,7 @@
-import React from "react";
+import React,{useContext} from "react";
 import  { HiMenuAlt4 }  from "react-icons/hi"
 import  { AiOutlineClose } from "react-icons/ai"
+import {TransactionContext} from "../context/TransactionContext"
 
 import logo from "../../src/images/logo.png"
 
@@ -12,6 +13,7 @@ const NavBarItem = ({title,classProps}) =>{
     );
 }
 const Navbar = () =>{
+    const {connectWallet,currentAccount,formData,setFormData,handleChange,sendTransaction} = useContext(TransactionContext);
     const [toggleMenu,setToggleMenu] = React.useState(false);
     return (
         <nav className = "w-full flex md:justfy justify-between items-center p-4">
@@ -24,9 +26,13 @@ const Navbar = () =>{
                      <NavBarItem key = {item + index} title = {item}/>
                 ))}
                </div>
-                <li className = "bg-[#2952e3] py-2 px-7 mx-4 rounded-full cursor-pointer hover:bg-[#2546bd] hover:text-white">
-                    Login
-                </li>
+               {!currentAccount && (<button 
+                        type = "button" 
+                        onClick = {connectWallet} 
+                        className = "flex flex-row justify-center items-center bg-[#2952e3] p-2 rounded-full cursor-pointer hover:bg-[#2546bd] hover:text-white border-2"
+                    >
+                        LOGIN
+                    </button>)}
             </ul>
             <div className = "flex relative">
             {toggleMenu
